@@ -1,0 +1,5 @@
+Pizza,9.99,/path/to/pizza.jpg,Delicious pizza,MainCourse,"GlutenFree",Available
+Burger,11.99,/path/to/burger.jpg,Juicy burger,MainCourse,"DairyFree",Available
+Salad,7.50,/path/to/salad.jpg,Fresh green salad,Appetizer,"Vegan;GlutenFree",Available
+Steak,25.99,/path/to/steak.jpg,Grilled steak,MainCourse,"",Limited
+Soda,1.99,/path/to/soda.jpg,Carbonated soft drink,Drink,"",Available
