@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-0d8aee0ba66cd24c9d29.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "menu-management",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "menu-management::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-menu-management-Debug-9135a34e109c14c41dd3.json",
+					"name" : "menu-management",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "menu-management_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-menu-management_autogen-Debug-c4a1553514571a3720d2.json",
+					"name" : "menu-management_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "menu-management_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-menu-management_autogen_timestamp_deps-Debug-93dea6bf0f2de879929d.json",
+					"name" : "menu-management_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/vijithagunta/menu-management/build/Qt_6_7_0_for_macOS-Debug",
+		"source" : "/Users/vijithagunta/menu-management"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

@@ -1,0 +1,9 @@
+/Users/vijithagunta/menu-management/build/Qt_6_7_0_for_macOS-Debug/CMakeFiles/menu-management.dir
+/Users/vijithagunta/menu-management/build/Qt_6_7_0_for_macOS-Debug/CMakeFiles/edit_cache.dir
+/Users/vijithagunta/menu-management/build/Qt_6_7_0_for_macOS-Debug/CMakeFiles/rebuild_cache.dir
+/Users/vijithagunta/menu-management/build/Qt_6_7_0_for_macOS-Debug/CMakeFiles/list_install_components.dir
+/Users/vijithagunta/menu-management/build/Qt_6_7_0_for_macOS-Debug/CMakeFiles/install.dir
+/Users/vijithagunta/menu-management/build/Qt_6_7_0_for_macOS-Debug/CMakeFiles/install/local.dir
+/Users/vijithagunta/menu-management/build/Qt_6_7_0_for_macOS-Debug/CMakeFiles/install/strip.dir
+/Users/vijithagunta/menu-management/build/Qt_6_7_0_for_macOS-Debug/CMakeFiles/menu-management_autogen_timestamp_deps.dir
+/Users/vijithagunta/menu-management/build/Qt_6_7_0_for_macOS-Debug/CMakeFiles/menu-management_autogen.dir
