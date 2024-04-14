@@ -12,6 +12,8 @@ class MenuController : public QObject {
     Q_OBJECT
 public:
     explicit MenuController(QObject *parent = nullptr);
+public slots:
+    void handleItemDeletion(const QString &itemName);
 
     void setMenuModel(Menu* menu);
     void setView(MenuListView* view);
@@ -21,6 +23,7 @@ private:
     Menu* menuModel;
     MenuListView* menuView;
     MenuItemAdapter adapter;
+    void saveMenuItemsToFile(const QString &filename);
 };
 
 #endif // MENUCONTROLLER_H

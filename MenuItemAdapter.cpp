@@ -66,7 +66,7 @@ std::vector<DietaryRestriction> MenuItemAdapter::parseDietaryRestrictions(const 
 }
 
 void MenuItemAdapter::saveMenuItemsToCSV(const std::vector<MenuItem>& items, const std::string& filename) {
-    std::ofstream outFile(filename, std::ios::app);
+    std::ofstream outFile(filename, std::ios::out);
     if (!outFile.is_open()) {
         throw std::runtime_error("Failed to open file for writing: " + filename);
     }

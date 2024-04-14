@@ -4,17 +4,21 @@
 #include <QWidget>
 #include <QListView>
 #include "MenuListModel.h"
-#include "Menu.h"  // Ensure Menu is included
+#include "Menu.h"
 
 class MenuListView : public QWidget {
     Q_OBJECT
 public:
     explicit MenuListView(QWidget *parent = nullptr);
-    void setMenu(Menu* menu);  // Method to set the menu
+    void setMenu(Menu* menu);
+    void contextMenuEvent(QContextMenuEvent *event);
 
 private:
     QListView* listView;
-    MenuListModel* model;  // This will be initialized with the menu
+    MenuListModel* model;
+
+signals:
+    void itemDeleted(const QString &itemName);
 };
 
-#endif // MENULISTVIEW_H
+#endif

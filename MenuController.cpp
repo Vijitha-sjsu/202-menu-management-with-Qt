@@ -10,6 +10,7 @@ void MenuController::setMenuModel(Menu* menu) {
 
 void MenuController::setView(MenuListView* view) {
     menuView = view;
+    connect(menuView, &MenuListView::itemDeleted, this, &MenuController::handleItemDeletion);
 }
 
 void MenuController::loadMenuItemsFromFile(const QString& filename) {
@@ -19,5 +20,19 @@ void MenuController::loadMenuItemsFromFile(const QString& filename) {
             menuModel->addItem(item);
         }
         menuView->setMenu(menuModel);
+    }
+}
+
+void MenuController::saveMenuItemsToFile(const QString &filename) {
+    if (menuModel != nullptr) {
+        adapter.saveMenuItemsToCSV(menuModel->getMenuItems(), filename.toStdString());
+    }
+}
+
+void MenuController::handleItemDeletion(const QString &itemName) {
+    if (menuModel) {
+        menuModel->removeItem(itemName.toStdString());
+        // Update the CSV file
+        saveMenuItemsToFile("/Users/vijithagunta/menu-management/menuitems.csv");
     }
 }

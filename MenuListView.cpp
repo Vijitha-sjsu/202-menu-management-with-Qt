@@ -3,6 +3,9 @@
 #include "MenuItemDelegate.h"
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QContextMenuEvent>
+#include <QMenu>
+#include <QDebug>
 
 MenuListView::MenuListView(QWidget *parent) : QWidget(parent), listView(new QListView(this)) {
     QVBoxLayout* layout = new QVBoxLayout(this);
@@ -52,3 +55,19 @@ void MenuListView::setMenu(Menu* menu) {
     MenuListModel* model = new MenuListModel(menu, this);
     listView->setModel(model);
 }
+
+void MenuListView::contextMenuEvent(QContextMenuEvent *event) {
+    QModelIndex index = listView->indexAt(event->pos());
+    qDebug() << "Context menu event triggered";
+    if (index.isValid()) {
+        QMenu menu(this);
+        QAction *deleteAction = menu.addAction("Delete Item");
+        QAction *selectedAction = menu.exec(mapToGlobal(event->pos()));
+        if (selectedAction == deleteAction) {
+            QString itemName = index.data(MenuListModel::NameRole).toString();
+            qDebug() << "Attempting to delete item:" << itemName;
+            emit itemDeleted(itemName);
+        }
+    }
+}
+
