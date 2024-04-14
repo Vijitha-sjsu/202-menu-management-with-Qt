@@ -1,21 +1,22 @@
+// main.cpp
+
 #include <QApplication>
-#include "mainwindow.h"
 #include "Menu.h"
-#include "MenuItemAdapter.h"
+#include "MenuListView.h"
+#include "MenuController.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     Menu menu;
-    MenuItemAdapter adapter;
+    MenuListView view;
+    MenuController controller;
 
-    // Load items from a CSV file
-    std::vector<MenuItem> items = adapter.loadMenuItemsFromCSV("/Users/vijithagunta/menu-management/menuitems.csv");
-    for (const auto& item : items) {
-        menu.addItem(item);
-    }
+    controller.setMenuModel(&menu);
+    controller.setView(&view);
+    controller.loadMenuItemsFromFile("/Users/vijithagunta/menu-management/menuitems.csv");
 
-    MainWindow mainWindow(&menu);
-    mainWindow.show();
+    view.show();
+
     return app.exec();
 }
