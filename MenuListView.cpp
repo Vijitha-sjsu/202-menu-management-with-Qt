@@ -6,6 +6,7 @@
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QDebug>
+#include <QPushButton>
 
 MenuListView::MenuListView(QWidget *parent) : QWidget(parent), listView(new QListView(this)) {
     QVBoxLayout* layout = new QVBoxLayout(this);
@@ -37,13 +38,16 @@ MenuListView::MenuListView(QWidget *parent) : QWidget(parent), listView(new QLis
     QLabel* label = new QLabel(tr("Menu Management"), this);
     layout->addWidget(label);
 
-    // Assume you have an instance of your Menu model
-    Menu* menu = new Menu();  // This would be replaced with your actual Menu instance
+    Menu* menu = new Menu();
     model = new MenuListModel(menu, this);
     listView->setModel(model);
 
     MenuItemDelegate* delegate = new MenuItemDelegate(this);
     listView->setItemDelegate(delegate);
+
+    QPushButton *addButton = new QPushButton(tr("Add Item"), this);
+    connect(addButton, &QPushButton::clicked, this, &MenuListView::onAddItemClicked);
+    layout->addWidget(addButton);
 
     layout->addWidget(listView);
     setLayout(layout);
@@ -71,3 +75,6 @@ void MenuListView::contextMenuEvent(QContextMenuEvent *event) {
     }
 }
 
+void MenuListView::onAddItemClicked() {
+    emit addItemRequested();
+}

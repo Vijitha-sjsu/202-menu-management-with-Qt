@@ -12,6 +12,7 @@ public:
     explicit MenuListView(QWidget *parent = nullptr);
     void setMenu(Menu* menu);
     void contextMenuEvent(QContextMenuEvent *event);
+    void onAddItemClicked();
 
 private:
     QListView* listView;
@@ -19,6 +20,7 @@ private:
 
 signals:
     void itemDeleted(const QString &itemName);
+    void addItemRequested();
 };
 
 #endif

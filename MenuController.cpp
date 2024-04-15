@@ -1,6 +1,5 @@
-// MenuController.cpp
-
 #include "MenuController.h"
+#include "MenuItemDialog.h"
 
 MenuController::MenuController(QObject *parent) : QObject(parent), menuModel(nullptr), menuView(nullptr) {}
 
@@ -11,6 +10,7 @@ void MenuController::setMenuModel(Menu* menu) {
 void MenuController::setView(MenuListView* view) {
     menuView = view;
     connect(menuView, &MenuListView::itemDeleted, this, &MenuController::handleItemDeletion);
+    connect(menuView, &MenuListView::addItemRequested, this, &MenuController::addItem);
 }
 
 void MenuController::loadMenuItemsFromFile(const QString& filename) {
@@ -33,6 +33,15 @@ void MenuController::handleItemDeletion(const QString &itemName) {
     if (menuModel) {
         menuModel->removeItem(itemName.toStdString());
         // Update the CSV file
+        saveMenuItemsToFile("/Users/vijithagunta/menu-management/menuitems.csv");
+    }
+}
+
+void MenuController::addItem() {
+    MenuItemDialog dialog(menuView);
+    if (dialog.exec() == QDialog::Accepted) {
+        MenuItem newItem = dialog.getItem();
+        menuModel->addItem(newItem);
         saveMenuItemsToFile("/Users/vijithagunta/menu-management/menuitems.csv");
     }
 }

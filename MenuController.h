@@ -18,6 +18,7 @@ public slots:
     void setMenuModel(Menu* menu);
     void setView(MenuListView* view);
     void loadMenuItemsFromFile(const QString& filename);
+    void addItem();
 
 private:
     Menu* menuModel;
