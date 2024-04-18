@@ -1,4 +1,3 @@
-// Menu.cpp
 #include "Menu.h"
 
 void Menu::addItem(const MenuItem& item) {
@@ -16,11 +15,22 @@ bool Menu::removeItem(const std::string& name) {
     return false;
 }
 
-const std::vector<MenuItem>& Menu::getMenuItems() const {
+bool Menu::updateItem(const MenuItem& updatedItem) {
+    auto it = std::find_if(items.begin(), items.end(), [&](const MenuItem& item) {
+        return item.getName() == updatedItem.getName();
+    });
+    if (it != items.end()) {
+        *it = updatedItem;
+        return true;
+    }
+    return false;
+}
+
+const std::vector<MenuItem>& Menu::getMenuItems() {
     return items;
 }
 
-std::vector<MenuItem>::const_iterator Menu::findItem(const std::string& name) const {
+std::vector<MenuItem>::iterator Menu::findItemByName(const std::string& name) {
     return std::find_if(items.begin(), items.end(), [&](const MenuItem& item) {
         return item.getName() == name;
     });

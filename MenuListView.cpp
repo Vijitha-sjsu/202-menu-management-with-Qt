@@ -66,11 +66,15 @@ void MenuListView::contextMenuEvent(QContextMenuEvent *event) {
     if (index.isValid()) {
         QMenu menu(this);
         QAction *deleteAction = menu.addAction("Delete Item");
+        QAction *editAction = menu.addAction("Edit Item");
         QAction *selectedAction = menu.exec(mapToGlobal(event->pos()));
+        QString itemName = index.data(MenuListModel::NameRole).toString();
         if (selectedAction == deleteAction) {
-            QString itemName = index.data(MenuListModel::NameRole).toString();
             qDebug() << "Attempting to delete item:" << itemName;
             emit itemDeleted(itemName);
+        } else if (selectedAction == editAction) {
+            qDebug() << "Attempting to edit item:" << itemName;
+            emit editItemRequested(itemName);
         }
     }
 }

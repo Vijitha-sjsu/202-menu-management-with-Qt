@@ -1,4 +1,3 @@
-// Menu.h
 #ifndef MENU_H
 #define MENU_H
 
@@ -13,8 +12,9 @@ private:
 public:
     void addItem(const MenuItem& item);
     bool removeItem(const std::string& name);
-    const std::vector<MenuItem>& getMenuItems() const;
-    std::vector<MenuItem>::const_iterator findItem(const std::string& name) const;
+    bool updateItem(const MenuItem& updatedItem);
+    const std::vector<MenuItem>& getMenuItems();
+    std::vector<MenuItem>::iterator findItemByName(const std::string& name);
 };
 
-#endif // MENU_H
+#endif

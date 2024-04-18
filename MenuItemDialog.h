@@ -17,7 +17,9 @@ class MenuItemDialog : public QDialog {
 
 public:
     explicit MenuItemDialog(QWidget *parent = nullptr);
+    void setItem(const MenuItem& item);
     MenuItem getItem() const;
+    void setDietaryRestrictions(const std::vector<DietaryRestriction>& restrictions);
 
 private:
     QLineEdit *nameEdit;

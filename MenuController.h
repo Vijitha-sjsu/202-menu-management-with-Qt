@@ -1,5 +1,3 @@
-// MenuController.h
-
 #ifndef MENUCONTROLLER_H
 #define MENUCONTROLLER_H
 
@@ -12,13 +10,14 @@ class MenuController : public QObject {
     Q_OBJECT
 public:
     explicit MenuController(QObject *parent = nullptr);
+
 public slots:
     void handleItemDeletion(const QString &itemName);
-
+    void addItem();
+    void editItem(const QString &itemName);
     void setMenuModel(Menu* menu);
     void setView(MenuListView* view);
     void loadMenuItemsFromFile(const QString& filename);
-    void addItem();
 
 private:
     Menu* menuModel;
@@ -27,4 +26,4 @@ private:
     void saveMenuItemsToFile(const QString &filename);
 };
 
-#endif // MENUCONTROLLER_H
+#endif

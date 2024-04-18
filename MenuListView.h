@@ -21,6 +21,7 @@ private:
 signals:
     void itemDeleted(const QString &itemName);
     void addItemRequested();
+    void editItemRequested(const QString &itemName);
 };
 
 #endif

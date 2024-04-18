@@ -11,6 +11,7 @@ void MenuController::setView(MenuListView* view) {
     menuView = view;
     connect(menuView, &MenuListView::itemDeleted, this, &MenuController::handleItemDeletion);
     connect(menuView, &MenuListView::addItemRequested, this, &MenuController::addItem);
+    connect(menuView, &MenuListView::editItemRequested, this, &MenuController::editItem);
 }
 
 void MenuController::loadMenuItemsFromFile(const QString& filename) {
@@ -43,5 +44,27 @@ void MenuController::addItem() {
         MenuItem newItem = dialog.getItem();
         menuModel->addItem(newItem);
         saveMenuItemsToFile("/Users/vijithagunta/menu-management/menuitems.csv");
+    }
+}
+
+void MenuController::editItem(const QString &itemName) {
+    qDebug() << "Attempting to edit item:" << itemName;
+    auto& items = menuModel->getMenuItems();  // Get a reference to the items
+    auto itemIt = std::find_if(items.begin(), items.end(), [&](const MenuItem& item) {
+        return item.getName() == itemName.toStdString();
+    });
+
+    if (itemIt != items.end()) {
+        MenuItemDialog dialog(menuView);
+        dialog.setItem(*itemIt);  // Set the item's current properties to the dialog
+        if (dialog.exec() == QDialog::Accepted) {
+            MenuItem newItem = dialog.getItem();
+            menuModel->updateItem(newItem);
+            saveMenuItemsToFile("/Users/vijithagunta/menu-management/menuitems.csv");
+            qDebug() << "Item updated successfully. noww";
+             // Assuming you have a method to get index from iterator
+        }
+    } else {
+        qDebug() << "Item not found for editing:" << itemName;
     }
 }
