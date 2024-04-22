@@ -21,6 +21,7 @@ public:
         DescriptionRole,
         AvailabilityRole,
         DietaryRestrictionRole,
+        UuidRole
     };
     Q_ENUM(MenuItemRoles)
 

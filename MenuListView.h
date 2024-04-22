@@ -19,9 +19,10 @@ private:
     MenuListModel* model;
 
 signals:
-    void itemDeleted(const QString &itemName);
+    void itemDeleted(const QString &itemUuid);
+    void editItemRequested(const QString &itemUuid);
     void addItemRequested();
-    void editItemRequested(const QString &itemName);
+
 };
 
 #endif

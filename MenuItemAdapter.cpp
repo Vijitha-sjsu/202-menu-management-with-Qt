@@ -6,11 +6,15 @@
 #include <stdexcept>
 #include <iostream>
 #include <fstream>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/uuid/string_generator.hpp>
 
 std::string MenuItemAdapter::serialize(const MenuItem& item) {
     std::ostringstream oss;
-    oss << item.getName() << "," << item.getPrice() << "," << item.getImagePath() << ","
-        << item.getDescription() << "," << categoryToString(item.getCategory()) << ",\"";
+    oss << boost::uuids::to_string(item.getId()) << ","
+        << item.getName() << "," << item.getPrice() << ","
+        << item.getImagePath() << "," << item.getDescription() << ","
+        << categoryToString(item.getCategory()) << ",\"";
 
     // Joining dietary restrictions with a semicolon
     auto restrictions = item.getDietaryRestrictions();
@@ -33,19 +37,19 @@ MenuItem MenuItemAdapter::deserialize(const std::string& csvLine) {
         seglist.push_back(segment);
     }
 
-    // Validate segment list length or handle errors
-    if (seglist.size() != 7) throw std::runtime_error("CSV format error");
+    if (seglist.size() != 8) throw std::runtime_error("CSV format error");
 
-    // Parsing individual fields
-    std::string name = seglist[0];
-    double price = std::stod(seglist[1]);
-    std::string imagePath = seglist[2];
-    std::string description = seglist[3];
-    Category category = stringToCategory(seglist[4]);
-    std::vector<DietaryRestriction> dietaryRestrictions = parseDietaryRestrictions(seglist[5].substr(1, seglist[5].length() - 2)); // Removing quotes
-    Availability availability = stringToAvailability(seglist[6]);
+    boost::uuids::string_generator gen;
+    boost::uuids::uuid uuid = gen(seglist[0]);
+    std::string name = seglist[1];
+    double price = std::stod(seglist[2]);
+    std::string imagePath = seglist[3];
+    std::string description = seglist[4];
+    Category category = stringToCategory(seglist[5]);
+    std::vector<DietaryRestriction> dietaryRestrictions = parseDietaryRestrictions(seglist[6].substr(1, seglist[6].length() - 2));
+    Availability availability = stringToAvailability(seglist[7]);
 
-    return MenuItem(name, price, imagePath, description, category, dietaryRestrictions, availability);
+    return MenuItem(name, price, imagePath, description, category, dietaryRestrictions, availability, uuid);
 }
 
 std::vector<DietaryRestriction> MenuItemAdapter::parseDietaryRestrictions(const std::string& restrictionsStr) {

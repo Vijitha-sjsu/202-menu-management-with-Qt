@@ -11,6 +11,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Boost REQUIRED COMPONENTS random)  # Assuming you only need the random component for UUIDs
+include_directories(${Boost_INCLUDE_DIRS})
 
 set(PROJECT_SOURCES
         main.cpp
@@ -75,6 +77,7 @@ else()
 endif()
 
 target_link_libraries(menu-management PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(menu-management PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${Boost_LIBRARIES})
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

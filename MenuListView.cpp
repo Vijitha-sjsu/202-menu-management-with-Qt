@@ -68,13 +68,13 @@ void MenuListView::contextMenuEvent(QContextMenuEvent *event) {
         QAction *deleteAction = menu.addAction("Delete Item");
         QAction *editAction = menu.addAction("Edit Item");
         QAction *selectedAction = menu.exec(mapToGlobal(event->pos()));
-        QString itemName = index.data(MenuListModel::NameRole).toString();
+        QString itemUuid = index.data(MenuListModel::UuidRole).toString();
         if (selectedAction == deleteAction) {
-            qDebug() << "Attempting to delete item:" << itemName;
-            emit itemDeleted(itemName);
+            qDebug() << "Attempting to delete item:" << itemUuid;
+            emit itemDeleted(itemUuid);
         } else if (selectedAction == editAction) {
-            qDebug() << "Attempting to edit item:" << itemName;
-            emit editItemRequested(itemName);
+            qDebug() << "Attempting to edit item:" << itemUuid;
+            emit editItemRequested(itemUuid);
         }
     }
 }

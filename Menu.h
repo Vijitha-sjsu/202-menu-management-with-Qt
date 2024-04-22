@@ -2,19 +2,19 @@
 #define MENU_H
 
 #include <vector>
-#include <string>
+#include <boost/uuid/uuid.hpp>
 #include "MenuItem.h"
 
 class Menu {
-private:
-    std::vector<MenuItem> items;
-
 public:
     void addItem(const MenuItem& item);
-    bool removeItem(const std::string& name);
+    bool removeItem(const boost::uuids::uuid& id);
     bool updateItem(const MenuItem& updatedItem);
-    const std::vector<MenuItem>& getMenuItems();
-    std::vector<MenuItem>::iterator findItemByName(const std::string& name);
+    const std::vector<MenuItem>& getMenuItems() const;
+    std::vector<MenuItem>::iterator findItemById(const boost::uuids::uuid& id);
+
+private:
+    std::vector<MenuItem> items;
 };
 
-#endif
+#endif // MENU_H

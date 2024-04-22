@@ -2,6 +2,8 @@
 #define MENUCONTROLLER_H
 
 #include <QObject>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
 #include "Menu.h"
 #include "MenuItemAdapter.h"
 #include "MenuListView.h"
@@ -12,9 +14,9 @@ public:
     explicit MenuController(QObject *parent = nullptr);
 
 public slots:
-    void handleItemDeletion(const QString &itemName);
+    void handleItemDeletion(const QString &itemUuid);
     void addItem();
-    void editItem(const QString &itemName);
+    void editItem(const QString &itemUuid);
     void setMenuModel(Menu* menu);
     void setView(MenuListView* view);
     void loadMenuItemsFromFile(const QString& filename);
@@ -24,6 +26,7 @@ private:
     MenuListView* menuView;
     MenuItemAdapter adapter;
     void saveMenuItemsToFile(const QString &filename);
+    boost::uuids::string_generator uuidGen;
 };
 
-#endif
+#endif // MENUCONTROLLER_H

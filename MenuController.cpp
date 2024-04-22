@@ -1,10 +1,15 @@
 #include "MenuController.h"
 #include "MenuItemDialog.h"
+#include <QDebug>
 
-MenuController::MenuController(QObject *parent) : QObject(parent), menuModel(nullptr), menuView(nullptr) {}
+MenuController::MenuController(QObject *parent)
+    : QObject(parent), menuModel(nullptr), menuView(nullptr) {}
 
 void MenuController::setMenuModel(Menu* menu) {
     menuModel = menu;
+    if (menuView) {
+        menuView->setMenu(menuModel);
+    }
 }
 
 void MenuController::setView(MenuListView* view) {
@@ -12,6 +17,9 @@ void MenuController::setView(MenuListView* view) {
     connect(menuView, &MenuListView::itemDeleted, this, &MenuController::handleItemDeletion);
     connect(menuView, &MenuListView::addItemRequested, this, &MenuController::addItem);
     connect(menuView, &MenuListView::editItemRequested, this, &MenuController::editItem);
+    if (menuModel) {
+        menuView->setMenu(menuModel);
+    }
 }
 
 void MenuController::loadMenuItemsFromFile(const QString& filename) {
@@ -30,10 +38,9 @@ void MenuController::saveMenuItemsToFile(const QString &filename) {
     }
 }
 
-void MenuController::handleItemDeletion(const QString &itemName) {
+void MenuController::handleItemDeletion(const QString &itemUuid) {
     if (menuModel) {
-        menuModel->removeItem(itemName.toStdString());
-        // Update the CSV file
+        menuModel->removeItem(uuidGen(itemUuid.toStdString()));
         saveMenuItemsToFile("/Users/vijithagunta/menu-management/menuitems.csv");
     }
 }
@@ -43,28 +50,28 @@ void MenuController::addItem() {
     if (dialog.exec() == QDialog::Accepted) {
         MenuItem newItem = dialog.getItem();
         menuModel->addItem(newItem);
+        menuView->setMenu(menuModel);
         saveMenuItemsToFile("/Users/vijithagunta/menu-management/menuitems.csv");
     }
 }
 
-void MenuController::editItem(const QString &itemName) {
-    qDebug() << "Attempting to edit item:" << itemName;
-    auto& items = menuModel->getMenuItems();  // Get a reference to the items
+void MenuController::editItem(const QString &itemUuid) {
+    auto& items = menuModel->getMenuItems();
+    boost::uuids::uuid uuid = uuidGen(itemUuid.toStdString());
     auto itemIt = std::find_if(items.begin(), items.end(), [&](const MenuItem& item) {
-        return item.getName() == itemName.toStdString();
+        return item.getId() == uuid;
     });
 
     if (itemIt != items.end()) {
         MenuItemDialog dialog(menuView);
-        dialog.setItem(*itemIt);  // Set the item's current properties to the dialog
+        dialog.setItem(*itemIt);
         if (dialog.exec() == QDialog::Accepted) {
-            MenuItem newItem = dialog.getItem();
-            menuModel->updateItem(newItem);
+            MenuItem updatedItem = dialog.getItem();
+            menuModel->updateItem(updatedItem);
             saveMenuItemsToFile("/Users/vijithagunta/menu-management/menuitems.csv");
-            qDebug() << "Item updated successfully. noww";
-             // Assuming you have a method to get index from iterator
+            qDebug() << "Item updated successfully.";
         }
     } else {
-        qDebug() << "Item not found for editing:" << itemName;
+        qDebug() << "Item not found for editing:" << itemUuid;
     }
 }

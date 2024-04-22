@@ -1,10 +1,10 @@
 #include "MenuItem.h"
-#include "Enums.h"
 
 MenuItem::MenuItem(const std::string& name, double price, const std::string& imagePath,
                    const std::string& description, Category category,
-                   const std::vector<DietaryRestriction>& dietaryRestrictions, Availability availability)
-    : name(name), price(price), imagePath(imagePath), description(description),
+                   const std::vector<DietaryRestriction>& dietaryRestrictions, Availability availability,
+                   const boost::uuids::uuid& id)
+    : id(id), name(name), price(price), imagePath(imagePath), description(description),
     category(category), dietaryRestrictions(dietaryRestrictions), availability(availability) {}
 
 std::string MenuItem::getName() const {
@@ -33,4 +33,8 @@ std::vector<DietaryRestriction> MenuItem::getDietaryRestrictions() const {
 
 Availability MenuItem::getAvailability() const {
     return availability;
+}
+
+boost::uuids::uuid MenuItem::getId() const {
+    return id;
 }

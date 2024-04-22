@@ -4,9 +4,9 @@ void Menu::addItem(const MenuItem& item) {
     items.push_back(item);
 }
 
-bool Menu::removeItem(const std::string& name) {
+bool Menu::removeItem(const boost::uuids::uuid& id) {
     auto it = std::find_if(items.begin(), items.end(), [&](const MenuItem& item) {
-        return item.getName() == name;
+        return item.getId() == id;
     });
     if (it != items.end()) {
         items.erase(it);
@@ -16,9 +16,7 @@ bool Menu::removeItem(const std::string& name) {
 }
 
 bool Menu::updateItem(const MenuItem& updatedItem) {
-    auto it = std::find_if(items.begin(), items.end(), [&](const MenuItem& item) {
-        return item.getName() == updatedItem.getName();
-    });
+    auto it = findItemById(updatedItem.getId());
     if (it != items.end()) {
         *it = updatedItem;
         return true;
@@ -26,12 +24,12 @@ bool Menu::updateItem(const MenuItem& updatedItem) {
     return false;
 }
 
-const std::vector<MenuItem>& Menu::getMenuItems() {
+const std::vector<MenuItem>& Menu::getMenuItems() const {
     return items;
 }
 
-std::vector<MenuItem>::iterator Menu::findItemByName(const std::string& name) {
+std::vector<MenuItem>::iterator Menu::findItemById(const boost::uuids::uuid& id) {
     return std::find_if(items.begin(), items.end(), [&](const MenuItem& item) {
-        return item.getName() == name;
+        return item.getId() == id;
     });
 }

@@ -28,6 +28,8 @@ QVariant MenuListModel::data(const QModelIndex& index, int role) const {
         return QString::fromStdString(availabilityToString(item.getAvailability()));
     case DietaryRestrictionRole:
         return dietaryRestrictionsToString(item.getDietaryRestrictions());
+    case UuidRole:
+        return QString::fromStdString(boost::uuids::to_string(item.getId()));
     default:
         return QVariant();
     }

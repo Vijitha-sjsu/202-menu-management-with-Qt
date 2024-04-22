@@ -11,6 +11,7 @@
 #include <QFormLayout>
 #include "MenuItem.h"
 #include <QListWidget>
+#include <boost/uuid/uuid.hpp>
 
 class MenuItemDialog : public QDialog {
     Q_OBJECT
@@ -18,7 +19,7 @@ class MenuItemDialog : public QDialog {
 public:
     explicit MenuItemDialog(QWidget *parent = nullptr);
     void setItem(const MenuItem& item);
-    MenuItem getItem() const;
+    MenuItem getItem();
     void setDietaryRestrictions(const std::vector<DietaryRestriction>& restrictions);
 
 private:
@@ -29,6 +30,7 @@ private:
     QListWidget *dietaryRestrictionsList;
     QComboBox *availabilityCombo;
     QPushButton *saveButton, *cancelButton;
+    boost::uuids::uuid currentItemUuid;
 
     void setupUi();
     void setupConnections();
